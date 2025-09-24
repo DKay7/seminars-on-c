@@ -25,5 +25,3 @@ int main() {
 #ifdef UB_PRINT
 void unreachable_function() { printf("You would never see this!\n"); }
 #endif
-
-
