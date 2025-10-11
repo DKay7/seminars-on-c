@@ -1,0 +1,112 @@
+Checks: >
+  -*,
+  clang-analyzer-*,
+  bugprone-*,
+  readability-*,
+  performance-*,
+  portability-*,
+  cppcoreguidelines-*,
+  misc-*,
+  modernize-*,
+  hicpp-*,
+  # отключаем проверки, мешающие C99 (часть modernize-*)
+  -modernize-use-auto,
+  -modernize-use-nullptr,
+  -modernize-use-using,
+  -modernize-use-trailing-return-type,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-owning-memory,
+  -hicpp-no-array-decay
+
+WarningsAsErrors: '*'
+
+CheckOptions:
+  # ========== Naming conventions ==========
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+  - key: readability-identifier-naming.ConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.AllowedVariableLength
+    value: '2'
+  - key: readability-identifier-naming.AllowedUnderscores
+    value: '1'
+
+  # ========== Magic numbers ==========
+  - key: readability-magic-numbers.IgnoredIntegerValues
+    value: '0;1;-1'
+  - key: readability-magic-numbers.IgnoreEnums
+    value: 'true'
+  - key: readability-magic-numbers.IgnoredFloatingPointValues
+    value: '0.0;1.0'
+  - key: readability-magic-numbers.ReportConstexpr
+    value: 'false'
+
+  # ========== Uninitialized variables ==========
+  - key: clang-analyzer-core.CallAndMessage
+    value: 'true'
+  - key: clang-analyzer-core.uninitialized.Assign
+    value: 'true'
+  - key: clang-analyzer-core.uninitialized.Branch
+    value: 'true'
+  - key: clang-analyzer-core.uninitialized.UndefReturn
+    value: 'true'
+
+  # ========== Exit and assert(0) usage ==========
+  - key: bugprone-terminate-if-no-exception.CheckCallExit
+    value: 'true'
+  - key: misc-static-assert
+    value: 'true'
+  - key: hicpp-no-assembler
+    value: 'true'
+
+  # ========== Null pointer deref and safety ==========
+  - key: clang-analyzer-core.NullDereference
+    value: 'true'
+  - key: clang-analyzer-core.nonnull.Parameter
+    value: 'true'
+  - key: clang-analyzer-core.builtin.BuiltinFunctions
+    value: 'true'
+  - key: clang-analyzer-unix.Malloc
+    value: 'true'
+  - key: clang-analyzer-unix.MallocSizeof
+    value: 'true'
+  - key: clang-analyzer-core.NullDereference
+    value: 'true'
+
+  # # ========== Misc useful checks ==========
+  # - key: bugprone-sizeof-expression
+  #   value: 'true'
+  # - key: bugprone-macro-parentheses
+  #   value: 'true'
+  # - key: bugprone-suspicious-memset-usage
+  #   value: 'true'
+  # - key: bugprone-suspicious-string-compare
+  #   value: 'true'
+  # - key: bugprone-suspicious-semicolon
+  #   value: 'true'
+  # - key: bugprone-branch-clone
+  #   value: 'true'
+  # - key: bugprone-narrowing-conversions
+  #   value: 'true'
+  # - key: clang-analyzer-deadcode.DeadStores
+  #   value: 'true'
+  # - key: clang-analyzer-security.FloatLoopCounter
+  #   value: 'true'
+  # - key: clang-analyzer-security.insecureAPI.strcpy
+  #   value: 'true'
+  # - key: clang-analyzer-security.insecureAPI.rand
+  #   value: 'true'
+
+  # ========== Enforce braces, indentation, etc. ==========
+  - key: readability-braces-around-statements.ShortStatementLines
+    value: '1'
+  - key: readability-braces-around-statements.IgnoreSingleLine
+    value: 'false'
+
+  # ========== Discourage goto ==========
+  - key: cppcoreguidelines-avoid-goto
+    value: 'true'
