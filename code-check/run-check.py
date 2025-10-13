@@ -57,7 +57,7 @@ def check_format(file_path: pathlib.Path) -> bool:
 
     if code != 0:
         logging.info(f"[clang-format] check FAILED")
-        logging.debug(f"clang-format retcode: {out}")
+        logging.debug(f"[clang-format] retcode: {out}")
 
     return code == 0
 
@@ -94,7 +94,7 @@ def check_tidy(file_path: pathlib.Path) -> bool:
     cmd.extend(compiler_args)
 
     code, out = run_cmd(cmd, cwd=".")
-    logging.info(f"[clang-tidy output]:\n{out}")
+    logging.info(f"[clang-tidy] output:\n{out}")
 
     return code == 0
 
@@ -140,8 +140,8 @@ def main() -> int:
     logging.info("Some errors are above. Go fix your code (＾▽＾)")
     logging.info(
         f"Summry:\n\t"
-        f"Formating: {"OK" if ok_format else "NOT OK, use clang-format"}\n\t"
-        f"Code quality: {"OK" if ok_tidy else "NOT OK, see warnings above"}"
+        f"Formating: {'OK' if ok_format else 'NOT OK, use clang-format'}\n\t"
+        f"Code quality: {'OK' if ok_tidy else 'NOT OK, see warnings above;'}"
     )
     return 1
 
