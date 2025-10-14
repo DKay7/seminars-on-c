@@ -9,7 +9,10 @@ Checks: >
   misc-*,
   modernize-*,
   hicpp-*,
-  # отключаем проверки, мешающие C99 (часть modernize-*)
+
+  # turn off non-C99 checks:
+  -misc-no-recursion
+  -misc-coroutine-hostile-raii
   -modernize-use-auto,
   -modernize-use-nullptr,
   -modernize-use-using,
