@@ -14,7 +14,7 @@ void longest_prefix_suffix(const char *pattern, int pattern_len, int *lps) {
 
     size_t lps_candidate = 0; // potential value of lps function
 
-    for (size_t prefix_len = 2; pattern[prefix_len] != '\0'; ++prefix_len) {
+    for (size_t prefix_len = 2; prefix_len <= pattern_len; ++prefix_len) {
 
         // search for smaller prefix that matches current suffix
         while (lps_candidate > 0 && pattern[lps_candidate] != pattern[prefix_len - 1]) {
@@ -44,8 +44,8 @@ void longest_prefix_suffix(const char *pattern, int pattern_len, int *lps) {
 const char *strstr_knuth_morris_pratt(const char *str, const char *pattern) {
     int str_len = strlen(str);
     int pattern_len = strlen(pattern);
-
-    int *lps = (int *)calloc(pattern_len + 1, sizeof(*lps));
+    int lps[pattern_len + 1];
+    //int *lps = (int *)calloc(pattern_len + 1, sizeof(*lps));
 
     longest_prefix_suffix(pattern, pattern_len, lps);
 
@@ -65,11 +65,11 @@ const char *strstr_knuth_morris_pratt(const char *str, const char *pattern) {
 
         // if pattern_idx mathed len of pattern, then we found an entry!
         if (pattern_idx == pattern_len) {
-            result = &str[pattern_idx + 1];
+            result = &str[str_idx - pattern_len + 1];
             break;
         }
     }
 
-    free(lps);
+    //free(lps);
     return result;
 }
