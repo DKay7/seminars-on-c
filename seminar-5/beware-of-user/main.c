@@ -15,10 +15,10 @@ int main() {
 
   int result = sum(x, y);
 
-  // clangd-
   printf(user_name);
 
   printf(", The result is %d, but can you figure out which numbers I were "
          "sumed up",
          result);
 }
+
