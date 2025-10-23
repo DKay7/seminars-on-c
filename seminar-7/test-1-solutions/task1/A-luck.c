@@ -8,81 +8,79 @@ char luck(int *a);
 double compute_team_average_luck(int *data, size_t team_size);
 bool compare_double_eq_zero(double num);
 
-#define CHECK(cond, err, ret)                                                  \
-  do {                                                                         \
-    if (!(cond)) {                                                             \
-      fprintf(stderr, "Condition `%s` failed. Error: %s\n", #cond, err);       \
-      return (ret);                                                            \
-    }                                                                          \
-  } while (0)
-
+#define CHECK(cond, err, ret)                                                                      \
+    do {                                                                                           \
+        if (!(cond)) {                                                                             \
+            fprintf(stderr, "Condition `%s` failed. Error: %s\n", #cond, err);                     \
+            return (ret);                                                                          \
+        }                                                                                          \
+    } while (0)
 
 int main(void) {
-  static const int MAX_TEAM_SIZE = 1000;
-  int array[MAX_TEAM_SIZE];
+    static const int MAX_TEAM_SIZE = 1000;
+    int array[MAX_TEAM_SIZE];
 
-  int num = 0;
-  int idx = 0;
-  while (scanf("%d", &num) == 1) {
-    array[idx++] = num;
+    int num = 0;
+    int idx = 0;
+    while (scanf("%d", &num) == 1) {
+        array[idx++] = num;
 
-    if (num == 0)
-      break;
-  }
+        if (num == 0)
+            break;
+    }
 
-  char res = luck(array);
-  CHECK(res != -1, "Error in luck function", EXIT_FAILURE);
+    char res = luck(array);
+    CHECK(res != -1, "Error in luck function", EXIT_FAILURE);
 
-  printf("Result: %c\n", res);
+    printf("Result: %c\n", res);
 }
 
 char luck(int *teams) {
-  CHECK(teams != NULL, "NUll pointer passed", -1);
+    CHECK(teams != NULL, "NUll pointer passed", -1);
 
-  int *team_luck_ptr = teams;
+    int *team_luck_ptr = teams;
 
-  // First pass is to read size;
-  while (*team_luck_ptr != 0) {
-    ++team_luck_ptr;
-  }
+    // First pass is to read size;
+    while (*team_luck_ptr != 0) {
+        ++team_luck_ptr;
+    }
 
-  // compute size as pointers difference
-  size_t teams_size = (size_t)(team_luck_ptr - teams);
+    // compute size as pointers difference
+    size_t teams_size = (size_t)(team_luck_ptr - teams);
 
-  // Check that we compute size properly
-  CHECK(teams_size % 2 == 0, "Uneven size of two equal-sized teams!", -1);
+    // Check that we compute size properly
+    CHECK(teams_size % 2 == 0, "Uneven size of two equal-sized teams!", -1);
 
-  size_t one_team_size = teams_size / 2;
+    size_t one_team_size = teams_size / 2;
 
-  // Now we know team size, so we can compute average luck
-  double first_team_avg_luck = compute_team_average_luck(teams, one_team_size);
-  double second_team_avg_luck =
-      compute_team_average_luck(teams + one_team_size, one_team_size);
+    // Now we know team size, so we can compute average luck
+    double first_team_avg_luck = compute_team_average_luck(teams, one_team_size);
+    double second_team_avg_luck = compute_team_average_luck(teams + one_team_size, one_team_size);
 
-  // first we must check if doubles are equal with some precision!
-  if (compare_double_eq_zero(first_team_avg_luck - second_team_avg_luck))
-    return 'F';
+    // first we must check if doubles are equal with some precision!
+    if (compare_double_eq_zero(first_team_avg_luck - second_team_avg_luck))
+        return 'F';
 
-  if (first_team_avg_luck > second_team_avg_luck)
-    return 'Y';
+    if (first_team_avg_luck > second_team_avg_luck)
+        return 'Y';
 
-  return 'I';
+    return 'I';
 }
 
 double compute_team_average_luck(int *data, size_t team_size) {
-  CHECK(data != NULL, "NUll pointer passed", -1);
+    CHECK(data != NULL, "NUll pointer passed", -1);
 
-  unsigned team_total_luck = 0;
+    unsigned team_total_luck = 0;
 
-  for (size_t idx = 0; idx < team_size; ++idx) {
-    team_total_luck += data[idx];
-  }
+    for (size_t idx = 0; idx < team_size; ++idx) {
+        team_total_luck += data[idx];
+    }
 
-  return ((double)team_total_luck) / team_size;
+    return ((double)team_total_luck) / team_size;
 }
 
 bool compare_double_eq_zero(double num) {
-  const double EPSILON = 1e-5;
+    const double EPSILON = 1e-5;
 
-  return fabs(num) < EPSILON;
+    return fabs(num) < EPSILON;
 }
