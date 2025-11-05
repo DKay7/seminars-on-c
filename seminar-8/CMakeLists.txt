@@ -1,0 +1,7 @@
+
+cmake_minimum_required(VERSION 3.11)
+
+project(seminar-8)
+
+add_subdirectory(dynamic-mem)
+add_subdirectory(hamlet-sort)
