@@ -1,3 +1,11 @@
+/*
+ * This code contais errors
+ * Bad desicions
+ * and some bad practise
+ *
+ * Your task is to find ALL mistakes you can
+ * and fix them
+ */
 
 #include <math.h>
 #include <stdbool.h>
@@ -16,7 +24,8 @@
     } while (0)
 
 // clang-format off
-typedef enum { ERR_OK = 0,
+typedef enum { 
+    ERR_OK = 0,
     ERR_MEMORY = 1,
     ERR_SYNTAX = 2,
     ERR_DIV_ZERO = 3 
@@ -69,9 +78,11 @@ void destroy_tokens(TokenArray *arr) {
 
 void dump_tokens(const TokenArray *arr) {
     printf("TokenArray:\n");
+
     for (size_t i = 0; i < arr->count; ++i) {
         const Token *t = &arr->tokens[i];
         printf("[%zu] ", i);
+
         switch (t->type) {
         case TOK_LITERAL:
             printf("LITERAL: %s", t->data.name);
@@ -83,6 +94,7 @@ void dump_tokens(const TokenArray *arr) {
             printf("OPERATOR: %c", t->data.op);
             break;
         }
+
         printf("\n");
     }
 
@@ -142,6 +154,11 @@ int main(void) {
     TokenArray *expr = create_tokens(7);
     if (!expr)
         return EXIT_FAILURE;
+
+    TokenData data;
+    data.number = 49.0;
+
+    printf("%c", data.op);
 
     expr->tokens[0] = (Token){.type = TOK_CONST, .data.number = 10.0};
     expr->tokens[1] = (Token){.type = TOK_OPERATOR, .data.op = '+'};

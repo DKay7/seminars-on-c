@@ -5,11 +5,12 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int reversed_lexicographic_comparator(const void *string_1, const void *string_2);
 int lexicographic_comparator(const void *string_1, const void *string_2);
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
 
     if (argc != 3) {
         fprintf(stderr, "usage: %s FILE OUTPUT", argv[0]);

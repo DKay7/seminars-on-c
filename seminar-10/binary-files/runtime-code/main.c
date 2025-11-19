@@ -94,8 +94,8 @@ static int write_payload(const char *path, const FunctionImage *image) {
     SOFT_ASSERT(image->bytes != NULL, "image bytes null", return EXIT_FAILURE;);
     SOFT_ASSERT(image->size > 0u, "image size is zero", return EXIT_FAILURE;);
 
-    int status = file_write_all(path, image->bytes, image->size);
-    SOFT_ASSERT(status == 0, "file_write_all payload", return EXIT_FAILURE;);
+    FileStatus status = file_write_all(path, image->bytes, image->size);
+    SOFT_ASSERT(status == FILE_OK, "file_write_all payload", return EXIT_FAILURE;);
     return EXIT_SUCCESS;
 }
 
@@ -105,8 +105,8 @@ static int replay_payload_from_file(const char *path, int *result_out) {
 
     FileBuffer disk_image = {.data = NULL, .size = 0u};
 
-    int status = file_read_all(path, &disk_image);
-    SOFT_ASSERT(status == 0, "file_read_all payload", return EXIT_FAILURE;);
+    FileStatus status = file_read_all(path, &disk_image);
+    SOFT_ASSERT(status == FILE_OK, "file_read_all payload", return EXIT_FAILURE;);
     SOFT_ASSERT(disk_image.size > 0u, "payload file empty", file_buffer_destroy(&disk_image);
                 return EXIT_FAILURE;);
 

@@ -48,8 +48,8 @@ static int write_measurements(const char *path, const float *data, size_t length
     SOFT_ASSERT(data != NULL, "data pointer is null", return EXIT_FAILURE;);
 
     const size_t byte_count = length * sizeof(float);
-    int status = file_write_all(path, data, byte_count);
-    SOFT_ASSERT(status == 0, "file_write_all failed", return EXIT_FAILURE;);
+    FileStatus status = file_write_all(path, data, byte_count);
+    SOFT_ASSERT(status == FILE_OK, "file_write_all failed", return EXIT_FAILURE;);
     return EXIT_SUCCESS;
 }
 
@@ -58,8 +58,8 @@ static floatBuffer read_measurements(const char *path) {
     SOFT_ASSERT(path != NULL, "invalid file path", return buffer;);
 
     FileBuffer raw = {.data = NULL, .size = 0u};
-    int status = file_read_all(path, &raw);
-    SOFT_ASSERT(status == 0, "file_read_all failed", return buffer;);
+    FileStatus status = file_read_all(path, &raw);
+    SOFT_ASSERT(status == FILE_OK, "file_read_all failed", return buffer;);
 
     if (raw.size == 0u) {
         file_buffer_destroy(&raw);
