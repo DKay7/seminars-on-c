@@ -1,0 +1,5 @@
+add_executable(RuntimeCode main.c)
+target_compile_features(RuntimeCode PRIVATE c_std_99)
+target_compile_options(RuntimeCode PRIVATE -static -g -O0 -Wall -Wextra -Wpedantic -fno-pie)
+target_link_options(RuntimeCode PRIVATE -no-pie  -static  )
+target_link_libraries(RuntimeCode PRIVATE BinaryFileUtils)
