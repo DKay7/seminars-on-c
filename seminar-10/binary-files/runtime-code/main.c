@@ -114,10 +114,12 @@ static int replay_payload_from_file(const char *path, int *result_out) {
 
     void *region = mmap(NULL, payload_size, PROT_READ | PROT_WRITE | PROT_EXEC,
                         MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
     SOFT_ASSERT(region != MAP_FAILED, "mmap payload", file_buffer_destroy(&disk_image);
                 return EXIT_FAILURE;);
 
     memcpy(region, disk_image.data, payload_size);
+    
     file_buffer_destroy(&disk_image);
 
     payload_fn_t fn = function_from_address(region);
