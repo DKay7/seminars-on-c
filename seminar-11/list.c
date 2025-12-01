@@ -71,7 +71,7 @@ bool list_insert(List *list, size_t index, int value) {
     ListNode *node = list_node_create(value);
     SOFT_ASSERT(node, false);
 
-    size_t prev_index = index >= 1 ? index : list->size - index - 1;
+    size_t prev_index = index >= 1 ? index : list->size - 1;
     ListNode *prev = list_get_node(list, prev_index);
     SOFT_ASSERT(prev, false);
 
