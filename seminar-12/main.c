@@ -4,6 +4,49 @@
 
 #include "bintree.h"
 
+static void build_balanced(Bintree *tree, const int *values, size_t left, size_t right);
+static void build_unbalanced(Bintree *tree, const int *values, size_t count);
+static double benchmark_search(const Bintree *tree, const int *keys, size_t key_count,
+                               size_t rounds, size_t *found_count);
+
+int main(void) {
+    const size_t node_count = 91;
+    int values[node_count];
+
+    for (size_t i = 0; i < node_count; ++i)
+        values[i] = (int)(i + 1);
+
+    Bintree *balanced = bintree_create();
+    Bintree *unbalanced = bintree_create();
+
+    build_balanced(balanced, values, 0, node_count);
+    build_unbalanced(unbalanced, values, node_count);
+
+    printf("Balanced:   size=%zu depth=%zu\n", balanced->size, bintree_depth(balanced));
+    printf("Unbalanced: size=%zu depth=%zu\n", unbalanced->size, bintree_depth(unbalanced));
+
+    bintree_dump(balanced, "balanced.png");
+    bintree_dump(unbalanced, "unbalanced.png");
+
+    const size_t rounds = 10000;
+    size_t balanced_hits = 0;
+    size_t unbalanced_hits = 0;
+
+    double balanced_time = benchmark_search(balanced, values, node_count, rounds, &balanced_hits);
+
+    double unbalanced_time =
+        benchmark_search(unbalanced, values, node_count, rounds, &unbalanced_hits);
+
+    printf("Search timing over %zu rounds * %zu keys:\n", rounds, node_count);
+    printf("  Balanced:   %.4f sec (hits=%zu)\n", balanced_time, balanced_hits);
+    printf("  Unbalanced: %.4f sec (hits=%zu)\n", unbalanced_time, unbalanced_hits);
+
+    bintree_destroy(balanced);
+    bintree_destroy(unbalanced);
+
+    return EXIT_SUCCESS;
+}
+
 static void build_balanced(Bintree *tree, const int *values, size_t left, size_t right) {
     SOFT_ASSERT(tree != NULL, (void)0);
 
@@ -40,41 +83,4 @@ static double benchmark_search(const Bintree *tree, const int *keys, size_t key_
 
     clock_t end = clock();
     return (double)(end - start) / CLOCKS_PER_SEC;
-}
-
-int main(void) {
-    const size_t node_count = 31;
-    int values[node_count];
-    for (size_t i = 0; i < node_count; ++i)
-        values[i] = (int)(i + 1);
-
-    Bintree *balanced = bintree_create();
-    Bintree *unbalanced = bintree_create();
-
-
-    build_balanced(balanced, values, 0, node_count);
-    build_unbalanced(unbalanced, values, node_count);
-
-    printf("Balanced:   size=%zu depth=%zu\n", balanced->size, bintree_depth(balanced));
-    printf("Unbalanced: size=%zu depth=%zu\n", unbalanced->size, bintree_depth(unbalanced));
-
-    bintree_dump(balanced, "balanced.png");
-    bintree_dump(unbalanced, "unbalanced.png");
-
-    const size_t rounds = 10000;
-    size_t balanced_hits = 0;
-    size_t unbalanced_hits = 0;
-
-    double balanced_time = benchmark_search(balanced, values, node_count, rounds, &balanced_hits);
-    double unbalanced_time =
-        benchmark_search(unbalanced, values, node_count, rounds, &unbalanced_hits);
-
-    printf("Search timing over %zu rounds * %zu keys:\n", rounds, node_count);
-    printf("  Balanced:   %.4f sec (hits=%zu)\n", balanced_time, balanced_hits);
-    printf("  Unbalanced: %.4f sec (hits=%zu)\n", unbalanced_time, unbalanced_hits);
-
-    bintree_destroy(balanced);
-    bintree_destroy(unbalanced);
-    
-    return EXIT_SUCCESS;
 }

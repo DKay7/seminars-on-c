@@ -24,8 +24,9 @@ Bintree *bintree_create(void) {
 }
 
 static void bintree_node_destroy(BintreeNode *node) {
-    SOFT_ASSERT(node != NULL, (void)0); // base case
-    
+    if (node == NULL) // base case
+        return;
+
     bintree_node_destroy(node->left);
     bintree_node_destroy(node->right);
     free(node);
@@ -35,8 +36,10 @@ void bintree_destroy(Bintree *tree) {
     SOFT_ASSERT(tree != NULL, (void)0);
 
     bintree_node_destroy(tree->root);
-    tree->root = NULL;
-    tree->size = 0;
+
+    tree->root = (BintreeNode *)0xDEADBEEF;
+    tree->size = -1;
+
     free(tree);
 }
 
@@ -52,7 +55,7 @@ static size_t bintree_node_depth(const BintreeNode *node) {
 
 size_t bintree_depth(const Bintree *tree) {
     SOFT_ASSERT(tree != NULL, 0);
-    
+
     return bintree_node_depth(tree->root);
 }
 
@@ -88,12 +91,17 @@ bool bintree_insert(Bintree *tree, int value) {
 
     *link = node;
     ++tree->size;
-    
+
     return true;
 }
 
 bool bintree_remove(Bintree *tree, int value) {
     // TODO: do it yourself
+
+    (void)tree;
+    (void)value;
+
+    return false;
 }
 
 static void bintree_dump_node(FILE *dot, const BintreeNode *node) {
@@ -122,8 +130,8 @@ static void bintree_compile_dot(const char *dot_path, const char *image_path) {
     SOFT_ASSERT(dot_path != NULL, (void)0);
 
     char command[512] = "";
-    int written = snprintf(command, sizeof(command), "dot -Tpng \"%s\" -o \"%s\"", dot_path,
-                           image_path);
+    int written =
+        snprintf(command, sizeof(command), "dot -Tpng \"%s\" -o \"%s\"", dot_path, image_path);
     SOFT_ASSERT(written > 0 && (size_t)written < sizeof(command), (void)0);
 
     int status = system(command);
