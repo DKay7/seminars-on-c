@@ -22,4 +22,3 @@ int main() {
 }
 
 int compute_sum(int lhs, int rhs) { return lhs + rhs; }
-

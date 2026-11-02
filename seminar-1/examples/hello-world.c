@@ -4,7 +4,7 @@
 
 int printf(const char *, ...);
 
-int main() {
+int main(void) {
 
   printf("Hello World!\n");
 
