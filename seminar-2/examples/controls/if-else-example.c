@@ -9,7 +9,7 @@ int main(void) {
     puts("Temperature is at or below zero");
   }
 
-  if (temperature > 0); // NOTE: be aware of ;
+  if (temperature > 0);
   {
     puts("Bug: this block runs unconditionally!");
   }

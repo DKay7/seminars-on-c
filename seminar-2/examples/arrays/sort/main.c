@@ -13,6 +13,7 @@ int main() {
   input_array(array, array_size);
 
   qsort(array, array_size, sizeof(array[0]), compare_integers);
+
   print_array(array, array_size);
 
   return 0;

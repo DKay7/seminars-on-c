@@ -5,8 +5,8 @@
 
 void qsort(void *array, size_t n_memb, size_t el_size,
            int (*comparator)(const void *, const void *)) {
-  assert(array);
-  assert(comparator);
+  assert(array != NULL);
+  assert(comparator != NULL);
 
   if (n_memb <= 0) {
     return;
@@ -61,7 +61,7 @@ void swap(void *a, void *b, size_t el_size) {
   char *b_arr = (char *)b;
   char tmp = 0;
 
-  for (unsigned i = 0; i < el_size; i++) {
+  for (size_t i = 0; i < el_size; i++) {
     tmp = a_arr[i];
     a_arr[i] = b_arr[i];
     b_arr[i] = tmp;

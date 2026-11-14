@@ -32,7 +32,9 @@ int main(void) {
 
   // Advance the index on every iteration so that the loop terminates.
   i = 0;
-  while ((ch = text[i]) != '\0') {
+
+  while ((ch = text[i]) != '\0')
+  {
     putchar(ch);
     ++i;
   }

@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 // same as below
+//
 // enum  OPS {
 //   INVALID = 0,
 //   ADD = 1,
@@ -19,8 +20,10 @@ typedef enum {
   NUM_OPS,
 } ops_t;
 
+
 int main(void) {
   ops_t operation = INVALID;
+
   int a = 0;
   int b = 0;
 
@@ -35,7 +38,7 @@ int main(void) {
     int result = a + b;
     printf("Sum: %d\n", result);
     break;
-  }
+    }
   case SUB: {
     int result = a - b;
     printf("Difference: %d\n", result);
